@@ -1,0 +1,7 @@
+apache-airflow-providers-apache-spark
+
+# Delta Lake
+delta-spark==3.3.0
+
+# Amazon Deeque
+pydeequ==1.4.0

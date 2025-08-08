@@ -1,0 +1,53 @@
+version: "3.9"  # Or a compatible version
+
+services:
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: mypgadminpassword
+    ports:
+      - "28080:80"
+    networks:
+      - hadoop_default
+
+  db:
+    image: postgres:15 # Or specify your desired PostgreSQL version (e.g., postgres:14, postgres:13)
+    ports:
+      - "5432:5432"  # Map the container's port 5432 to your host's port 5432. Change the host port if needed.
+    environment:
+      POSTGRES_USER: odoo  # Set the PostgreSQL user
+      POSTGRES_PASSWORD: odoo  # Set the PostgreSQL password (IMPORTANT: Use a strong password in production)
+      POSTGRES_DB: postgres  # Set the database name
+    volumes:
+      - odoo-db:/var/lib/postgresql/data
+      # custom config
+      - ./conf/postgres.conf:/var/lib/postgresql/data/postgresql.conf
+    restart: unless-stopped  # Ensure the container restarts if there's an issue
+    networks:
+      - hadoop_default
+
+  odoo:
+    image: odoo:17.0
+    ports:
+      - "8069:8069"
+    volumes:
+      - odoo-data:/var/lib/odoo
+    depends_on:
+      - db
+    environment:
+      - HOST=db
+      - USER=odoo
+      - PASSWORD=odoo
+    networks:
+      - hadoop_default
+
+
+volumes:
+  odoo-db:
+  odoo-data:
+
+networks:
+  # Use a pre-existing network
+  hadoop_default:
+    external: true

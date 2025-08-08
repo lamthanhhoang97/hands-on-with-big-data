@@ -1,0 +1,19 @@
+{
+    "name": "odoo-connector",
+    "config": {
+        "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+        "tasks.max": "1",
+        "database.hostname": "db",
+        "database.port": "5432",
+        "database.user": "odoo",
+        "database.password": "odoo",
+        "database.dbname" : "prod",
+        "topic.prefix": "odoo",
+        "schema.include.list": "public",
+        "table.include.list": "public.sale_order,public.sale_order_line,public.res_partner",
+        "plugin.name": "pgoutput",
+        "slot.name": "debezium_kafka",
+        "topic.creation.default.partitions": "2",
+        "topic.creation.default.replication.factor": "1"
+    }
+}

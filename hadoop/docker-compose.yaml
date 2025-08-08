@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  hadoop:
+    image: hadoop:3.4.1
+    container_name: hadoop
+    ports:
+      - "9870:9870" # Namenode UI
+      - "9000:9000"
+    volumes:
+      - namenode-data:/opt/hadoop/data/dfs/namenode
+      - datanode-data:/opt/hadoop/data/dfs/datanode
+    hostname: hadoop
+      
+volumes:
+  namenode-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /media/ad/hdd4tb/docker/volumes/hadoop/namenode-data
+  datanode-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /media/ad/hdd4tb/docker/volumes/hadoop/datanode-data

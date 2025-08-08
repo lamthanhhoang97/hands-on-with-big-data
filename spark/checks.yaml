@@ -1,0 +1,30 @@
+checks:
+  part:  # Table name
+    - check: isUnique
+      columns: ["p_partkey"]
+    - check: isComplete
+      columns: ["column1", "column2"]
+    - check: isUnique
+      columns: ["id"]
+    - check: hasMin
+      column: "value"
+      minValue: 0
+    - check: hasMax
+      column: "value"
+      maxValue: 100
+  table2:  # Another table
+    - check: isContainedIn
+      column: "category"
+      values: ["A", "B", "C"]
+    - check: hasDataType
+      column: "date_col"
+      dataType: "DateType"
+    # ... more checks for table2 ...
+  lineitem:
+    - check: hasMin
+      column: "l_discount"
+      minValue: 0.0
+    - check: hasMax
+      column: "l_discount"
+      maxValue: 1.0
+    

@@ -1,0 +1,7 @@
+pandas
+pyspark
+dask[complete]
+dask-deltatable
+pyarrow
+notebook # dependency conflicts
+quilt3[catalog,pyarrow]

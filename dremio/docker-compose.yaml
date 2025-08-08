@@ -1,0 +1,20 @@
+services:
+  dremio:
+    image: dremio/dremio-oss
+    container_name: dremio
+    ports:
+      - "9047:9047" # UI
+      - "31010:31010"
+      - "45678:45678"
+      - "32010:32010"
+    environment:
+      - DREMIO_JAVA_SERVER_EXTRA_OPTS=-Dpaths.dist=file:///opt/dremio/data/dist
+      - DREMIO_USER=admin
+      - DREMIO_PASSWORD=Y5WvpbgRI*WQ8EX*
+    networks:
+      - hadoop_default
+
+networks:
+  # Use a pre-existing network
+  hadoop_default:
+    external: true
